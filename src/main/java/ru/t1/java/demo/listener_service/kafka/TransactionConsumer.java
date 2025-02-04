@@ -58,6 +58,8 @@ public class TransactionConsumer {
                     }).toList();
             transactions.forEach(transactionService::processTransaction);
             log.debug("listener_service transaction consumer: записи обработаны");
+        } catch (Exception ex) {
+            log.error(ex.getMessage(), ex);
         } finally {
             ack.acknowledge();
         }
