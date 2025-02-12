@@ -1,6 +1,5 @@
 package ru.t1.java.demo.listener_service.kafka;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.common.header.Headers;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
@@ -10,10 +9,7 @@ import java.nio.charset.StandardCharsets;
 
 @Slf4j
 @Component
-@RequiredArgsConstructor
 public class MessageDeserializer<T> extends JsonDeserializer<T> {
-
-//    private final ObjectMapper objectMapper;
 
     private static String getMessage(byte[] data) {
         return new String(data, StandardCharsets.UTF_8);

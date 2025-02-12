@@ -1,6 +1,5 @@
 package ru.t1.java.demo.listener_service.service.impl;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,11 +9,15 @@ import ru.t1.java.demo.listener_service.repository.AccountRepository;
 import ru.t1.java.demo.listener_service.service.AccountService;
 
 @Slf4j
-@RequiredArgsConstructor
 @Service
 class AccountServiceImpl implements AccountService {
-    @Autowired
+
     private final AccountRepository accountRepository;
+
+    @Autowired
+    AccountServiceImpl(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
+    }
 
     @Override
     @Transactional

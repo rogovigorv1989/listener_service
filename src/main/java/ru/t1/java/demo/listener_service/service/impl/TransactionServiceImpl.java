@@ -1,6 +1,5 @@
 package ru.t1.java.demo.listener_service.service.impl;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,23 +21,25 @@ import static ru.t1.java.demo.listener_service.config.Сonstants.N;
 import static ru.t1.java.demo.listener_service.config.Сonstants.T;
 
 @Service
-@RequiredArgsConstructor
 public class TransactionServiceImpl implements TransactionService {
-    @Qualifier("transactionMapperImpl")
-    @Autowired
-    private final TransactionMapper mapper;
-
-    @Autowired
-    private final TransactionProducer<TransactionDTO> transactionProducer;
-
-    @Autowired
-    private final TransactionRepository transactionRepository;
-
-    @Autowired
-    private final AccountRepository accountRepository;
-
     @Value("${t1.kafka.topic.t1_demo_transaction_result}")
     private String transactionResultTopic;
+
+    private final TransactionMapper mapper;
+    private final TransactionProducer<TransactionDTO> transactionProducer;
+    private final TransactionRepository transactionRepository;
+    private final AccountRepository accountRepository;
+
+    @Autowired
+    public TransactionServiceImpl(@Qualifier("transactionMapperImpl") TransactionMapper mapper,
+                                  TransactionProducer<TransactionDTO> transactionProducer,
+                                  TransactionRepository transactionRepository,
+                                  AccountRepository accountRepository) {
+        this.mapper = mapper;
+        this.transactionProducer = transactionProducer;
+        this.transactionRepository = transactionRepository;
+        this.accountRepository = accountRepository;
+    }
 
     @Override
     public void processTransaction(Transaction transaction) {
