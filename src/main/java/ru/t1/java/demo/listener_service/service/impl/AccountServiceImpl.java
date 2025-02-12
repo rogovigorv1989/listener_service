@@ -15,7 +15,7 @@ class AccountServiceImpl implements AccountService {
     private final AccountRepository accountRepository;
 
     @Autowired
-    AccountServiceImpl(AccountRepository accountRepository) {
+    public AccountServiceImpl(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
     }
 
