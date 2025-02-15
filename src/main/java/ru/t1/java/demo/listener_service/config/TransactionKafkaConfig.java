@@ -15,6 +15,7 @@ import ru.t1.java.demo.listener_service.model.dto.TransactionDTO;
 @Slf4j
 @Configuration
 public class TransactionKafkaConfig extends AbstractKafkaConfig<TransactionDTO> {
+
     @Value("${t1.kafka.topic.t1_demo_transactions}")
     private String topic;
 

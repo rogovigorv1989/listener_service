@@ -17,8 +17,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import static ru.t1.java.demo.listener_service.config.Сonstants.N;
-import static ru.t1.java.demo.listener_service.config.Сonstants.T;
+import static ru.t1.java.demo.listener_service.config.Сonstants.TRANSACTIONS_LIMIT;
+import static ru.t1.java.demo.listener_service.config.Сonstants.TRANSACTIONS_PERIOD;
 
 @Service
 public class TransactionServiceImpl implements TransactionService {
@@ -45,9 +45,9 @@ public class TransactionServiceImpl implements TransactionService {
     public void processTransaction(Transaction transaction) {
 
         List<Transaction> recentTransactions = transactionRepository.findRecentTransactions(
-                transaction.getAccount().getAccountId(), LocalDateTime.now().minusSeconds(T));
+                transaction.getAccount().getAccountId(), LocalDateTime.now().minusSeconds(TRANSACTIONS_PERIOD));
 
-        if (recentTransactions.size() >= N) {
+        if (recentTransactions.size() >= TRANSACTIONS_LIMIT) {
             recentTransactions.forEach(t -> t.setStatus(Transaction.Status.BLOCKED));
             transactionProducer.sendTo(transactionResultTopic, transaction);
             return;
